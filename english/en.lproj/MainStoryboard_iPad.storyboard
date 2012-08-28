@@ -25,7 +25,20 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="考研英语词汇" id="pAh-UA-i1R">
+                                    <navigationItem title="考研词汇" id="pAh-UA-i1R">
+                                        <barButtonItem key="leftBarButtonItem" id="Sr1-XJ-TsD">
+                                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="I6h-EO-D9W">
+                                                <rect key="frame" x="7" y="7" width="170" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <segments>
+                                                    <segment title="全部"/>
+                                                    <segment title="生词"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="change:" destination="2" eventType="valueChanged" id="7hp-WP-4Pk"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="随机" id="x3v-8Y-K9X">
                                             <connections>
                                                 <action selector="random:" destination="2" id="ugL-lU-lRc"/>
@@ -34,10 +47,19 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" text="Label" textAlignment="right" adjustsFontSizeToFit="NO" autoshrinkMode="none" id="7mz-K4-0Qy">
+                                <rect key="frame" x="648" y="11" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="highlightedColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="_countLabel" destination="7mz-K4-0Qy" id="VEK-E6-XHv"/>
+                        <outlet property="_segControl" destination="I6h-EO-D9W" id="dEc-Td-cXT"/>
                         <outlet property="_tableView" destination="sOF-fe-44o" id="AZ8-cX-5LU"/>
                     </connections>
                 </viewController>
@@ -49,7 +71,10 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="change:"/>
                 <relationship kind="action" name="random:"/>
+                <relationship kind="outlet" name="_countLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_segControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="_tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
