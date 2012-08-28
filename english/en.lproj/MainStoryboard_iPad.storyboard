@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="考研英语" id="pAh-UA-i1R">
+                                    <navigationItem title="考研英语词汇" id="pAh-UA-i1R">
                                         <barButtonItem key="rightBarButtonItem" title="随机" id="x3v-8Y-K9X">
                                             <connections>
                                                 <action selector="random:" destination="2" id="ugL-lU-lRc"/>
@@ -50,6 +50,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
                 <relationship kind="action" name="random:"/>
+                <relationship kind="outlet" name="_tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
     </classes>
