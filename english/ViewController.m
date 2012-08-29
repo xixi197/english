@@ -18,18 +18,23 @@
     IBOutlet UILabel *_countLabel;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    [self loadData];
+    [self change:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveData) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)loadData {
     NSString *allPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/allWords.json"];
-    
     if (![[NSFileManager defaultManager] fileExistsAtPath:allPath]) {
         NSString *resourcePath = [[NSBundle mainBundle] pathForResource:@"allWords" ofType:@"json"];
         [[NSFileManager defaultManager] copyItemAtPath:resourcePath toPath:allPath error:nil];
     }
-
-    NSData *allData = [NSData dataWithContentsOfFile:allPath];
     
-    NSError *error;
+    NSData *allData = [NSData dataWithContentsOfFile:allPath];
+    NSError *error;//debug
     _allWords = [[NSJSONSerialization JSONObjectWithData:allData options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:&error] mutableCopy];
     
     NSString *newPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/newWords.json"];
@@ -39,14 +44,17 @@
         NSData *newData = [NSData dataWithContentsOfFile:newPath];
         _newWords = [[NSJSONSerialization JSONObjectWithData:newData options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:nil] mutableCopy];
     }
-
-    [self change:nil];
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)saveData {
+    if (_newWords.count > 0) {
+        NSString *newPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/newWords.json"];
+        NSData *newDate = [NSJSONSerialization dataWithJSONObject:_newWords options:0 error:nil];
+        [newDate writeToFile:newPath atomically:YES];
+    }
+}
+
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -59,17 +67,6 @@
     }
 }
 
-- (IBAction)random:(id)sender {
-    NSUInteger count = [_keys count];
-    for (NSUInteger i = 0; i < count; ++i) {
-        // Select a random element between i and end of array to swap with.
-        int nElements = count - i;
-        int n = (arc4random() % nElements) + i;
-        [_keys exchangeObjectAtIndex:i withObjectAtIndex:n];
-    }
-    [_tableView reloadData];
-}
-
 - (IBAction)change:(id)sender {
     if (_segControl.selectedSegmentIndex == 0) {
         _showWords = _allWords;
@@ -79,6 +76,17 @@
     _keys = [[_showWords allKeys] mutableCopy];
     _countLabel.text = [[NSNumber numberWithInt:_keys.count] description];
     [self random:nil];
+}
+
+- (IBAction)random:(id)sender {
+    NSUInteger count = [_keys count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        // Select a random element between i and end of array to swap with.
+        int nElements = count - i;
+        int n = (arc4random() % nElements) + i;
+        [_keys exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+    [_tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,10 +102,6 @@
     }
     
     [_tableView reloadData];
-
-    NSString *newPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/newWords.json"];
-    NSData *newDate =[NSJSONSerialization dataWithJSONObject:_newWords options:0 error:0];
-    [newDate writeToFile:newPath atomically:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

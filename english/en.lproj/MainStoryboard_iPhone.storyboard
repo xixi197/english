@@ -49,7 +49,7 @@
                             </navigationBar>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" text="Label" textAlignment="right" adjustsFontSizeToFit="NO" autoshrinkMode="none" id="pyc-VP-mCq">
                                 <rect key="frame" x="208" y="11" width="52" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <nil key="highlightedColor"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -74,6 +74,9 @@
             <relationships>
                 <relationship kind="action" name="change:"/>
                 <relationship kind="action" name="random:"/>
+                <relationship kind="outlet" name="_countLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_segControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="_tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
     </classes>
